@@ -73,8 +73,19 @@ body {
 }
 
 #input {
-    width: 100%;
+    /* Math in CSS https://css-tricks.com/a-couple-of-use-cases-for-calc/ */
+    width: calc(100% + 15px);
     margin-top: 10px;
     background-color: lightgray;
     border: 1px solid white;
+}
+
+#error {
+    font-size: 20px;
+    color: darkred;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: auto;
+    display: none;
 }
