@@ -12,15 +12,25 @@ const EVENTS = {
     MESSAGE: 'message',
     ALL_MESSAGES: 'all_messages',
     NICK_NAME: 'nick',
+    NICK_COLOR: 'color',
 };
 
 let socket = io();
 let messagesContainer = $('#messages');
 let usersContainer = $('#users');
-let userName = Cookies.get('user');
+let user = Cookies.get('user');
 let inputArea = $('#input')
 let errorArea = $('#error');
-let nickcolor = 'blue';
+let nickcolor = 'yellow';
+
+/* Scroll to bottom of container from https://stackoverflow.com/questions/3562202/setting-a-scrollbar-position */
+let scrollToBottom = (container = '.message') => {
+    let messages = $(container);
+    if (messages.length > 0) {
+        let bottomRow = messages[messages.length - 1];
+        messagesContainer[0].scrollTop = bottomRow.offsetTop;
+    }
+}
 
 let showError = errorMessage => {
     errorArea.show();
@@ -28,15 +38,15 @@ let showError = errorMessage => {
 }
 
 let sendUsername = () => {
-    socket.emit('user', {user: userName});
+    socket.emit(EVENTS.USER, {user: user});
 }
 socket.on(EVENTS.CONNECT, sendUsername);
 socket.on(EVENTS.DISCONNECT, sendUsername);
 
 let setName = data => {
-    userName = data.user;
-    $("#name").text(userName);
-    Cookies.set('user', userName);
+    user = data.user;
+    $("#name").text(user);
+    Cookies.set('user', user);
 }
 socket.on(EVENTS.USER, setName);
 socket.on(EVENTS.NICK_NAME, data => {
@@ -50,9 +60,36 @@ socket.on(EVENTS.NICK_NAME, data => {
 
 socket.on(EVENTS.ALL_USERS, data => {
     usersContainer.empty();
+    usersContainer.append('<div style="height: 10000px;"></div>');
     for(let user of data.users) {
         usersContainer.append(`<div class="user">${user}</div>`);
     }
+    scrollToBottom('.users');
+});
+
+socket.on(EVENTS.ALL_MESSAGES, data => {
+    messagesContainer.empty();
+    messagesContainer.append('<div style="height: 10000px;"></div>');
+    messagesContainer.append(`<div id="user-description">You are ${user}.</div>`)
+    for (let info of data.messages) {
+        let timeSpan = `<span class="time">${info.time}</span>`;
+        let userSpan = `<span class="username">${info.user}</span>`;
+        let messageSpan = `<span class="message-data">: ${info.message}</span>`;
+        let messageClass = 'message';
+        
+        if (info.user == user) {
+            userSpan = `<span class="username" style="color: ${nickcolor};">${info.user}</span>`;
+            messageClass += ' message-current-user';
+        }
+
+        let elem = `<div class="${messageClass}">${timeSpan} ${userSpan}${messageSpan}</div>`;
+        messagesContainer.append(elem);
+    }
+    scrollToBottom();
+});
+
+socket.on(EVENTS.NICK_COLOR, data => {
+    nickcolor = data.color;
 });
 
 inputArea.keypress(event => {
@@ -65,7 +102,7 @@ inputArea.keypress(event => {
                 showError('Incorrect number of arguments, expected 1');
             } else {
                 let data = {
-                    current_name: userName,
+                    current_name: user,
                     new_name: splitted[1],
                 }
                 socket.emit(EVENTS.NICK_NAME, data);
@@ -75,19 +112,14 @@ inputArea.keypress(event => {
             if (splitted.length !== 2) {
                 showError('Incorrect number of arguments, expected 1');
             } else {
-                nickcolor = splitted[1];
+                socket.emit(EVENTS.NICK_COLOR, {user: user, color: splitted[1]});
+                inputArea.val('');
             }
         } else if (message.startsWith('/')) {
             showError('Invalid command');
+        } else {
+            socket.emit(EVENTS.MESSAGE, {user: user, message: message});
+            inputArea.val('');
         }
     }
 });
-
-/* Scroll to bottom of container from https://stackoverflow.com/questions/3562202/setting-a-scrollbar-position */
-let scrollToBottom = () => {
-    let messages = $('.message');
-    let bottomRow = messages[messages.length - 1];
-    messagesContainer[0].scrollTop = bottomRow.offsetTop;
-}
-
-scrollToBottom();
