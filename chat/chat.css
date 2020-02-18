@@ -47,13 +47,9 @@ body {
 }
 
 #messages {
-    height: 500px;
     background-color: var(--secondary-dark);
     color: var(--secondary-color);
     padding-left: 10px;
-    position: relative;
-    /* overflow-x: auto; */
-    overflow-y: scroll;
 }
 
 #users {
@@ -63,13 +59,39 @@ body {
 
 /* Bottom alignment from https://stackoverflow.com/questions/2015032/align-divs-to-bottom-or-baseline */
 #messages, #users {
+    height: 500px;
     display: flex;
     flex-direction: column;
-    align-content: flex-end;
+    overflow-y: auto;
 }
 
-.message, .user {
+.message, .user, .message > * {
     padding-top: 2px;
+    font-size: 20px;
+}
+
+.message-current-user, .message-current-user > * {
+    font-style: italic;
+    font-weight: bold;
+    background-color: var(--main-color-dark);
+}
+
+#user-description {
+    color: grey;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.time {
+    color: lightgrey;
+}
+
+.username {
+    color: white;
+}
+
+.message-data {
+    color: whitesmoke;
 }
 
 #input {
