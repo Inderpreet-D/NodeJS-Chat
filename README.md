@@ -1,2 +1,2 @@
 # NodeJS-Chat
-Chat app using NodeJS, written for SENG 513
+Chat app using NodeJS
