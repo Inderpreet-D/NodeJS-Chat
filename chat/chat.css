@@ -88,6 +88,7 @@ body {
 
 .username {
     color: white;
+    padding-right: 10px;
 }
 
 .message-data {
