@@ -78,8 +78,8 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname + '/chat/chat.html'));
 });
 
-server.listen(80, () => {
-    console.log('Chat listening on port 80');
+server.listen(1961, () => {
+    console.log('Chat listening on port 1961');
 });
 
 io.on(EVENTS.CONNECT, socket => {
