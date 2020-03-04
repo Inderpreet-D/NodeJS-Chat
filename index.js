@@ -107,12 +107,8 @@ io.on(EVENTS.CONNECT, socket => {
             /* Remove element from https://stackoverflow.com/questions/5767325/how-do-i-remove-a-particular-element-from-an-array-in-javascript */
             let oldIdx = users.indexOf(data.current_name);
             users.splice(oldIdx, 1);
+            
             users.push(data.new_name);
-            for (let info of messages) {
-                if (info.user == data.current_name) {
-                    info.user = data.new_name;
-                }
-            }
             colors[data.new_name] = colors[data.current_name];
 
             socket.emit(EVENTS.NICK_NAME, {result: true, user: data.new_name});
