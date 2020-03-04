@@ -87,6 +87,8 @@ io.on(EVENTS.CONNECT, socket => {
     socket.on(EVENTS.USER, data => {
         if (!data.user || users.indexOf(data.user) >= 0) {
             data.user = getRandomUsername();
+        }
+        if (!(data.user in colors)) {
             colors[data.user] = 'yellow';
         }
         socket.emit(EVENTS.NICK_COLOR, {color: colors[data.user]});
