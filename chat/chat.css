@@ -31,7 +31,6 @@ body {
 }
 
 .container {
-    margin-top: 20px;
     background-color: var(--main-color);
     border: 2px solid var(--main-color-dark);
     border-radius: 10px;
