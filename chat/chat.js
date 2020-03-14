@@ -21,7 +21,6 @@ let usersContainer = $('#users');
 let user = Cookies.get('user');
 let inputArea = $('#input')
 let errorArea = $('#error');
-let nickcolor = 'yellow';
 
 /* Scroll to bottom of container from https://stackoverflow.com/questions/3562202/setting-a-scrollbar-position */
 let scrollToBottom = (container = '.message') => {
@@ -73,12 +72,11 @@ socket.on(EVENTS.ALL_MESSAGES, data => {
     messagesContainer.append(`<div id="user-description">You are ${user}.</div>`)
     for (let info of data.messages) {
         let timeSpan = `<span class="time">${info.time}</span>`;
-        let userSpan = `<span class="username">${info.user}</span>`;
+        let userSpan = `<span class="username" style="color: ${info.color};">${info.user}</span>`;
         let messageSpan = `<span class="message-data">: ${info.message}</span>`;
         let messageClass = 'message';
 
         if (info.user == user) {
-            userSpan = `<span class="username" style="color: ${nickcolor};">${info.user}</span>`;
             messageClass += ' message-current-user';
         }
 
@@ -86,10 +84,6 @@ socket.on(EVENTS.ALL_MESSAGES, data => {
         messagesContainer.append(elem);
     }
     scrollToBottom();
-});
-
-socket.on(EVENTS.NICK_COLOR, data => {
-    nickcolor = data.color;
 });
 
 inputArea.keypress(event => {
