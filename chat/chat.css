@@ -5,17 +5,19 @@ Tutorial Section: 04
 */
 
 @import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
-
 /* Custom properties info from https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties */
+
 /* :root selector from https://developer.mozilla.org/en-US/docs/Web/CSS/:root */
+
 /* Colors adapted from https://coolors.co/643a71-8b5fbf-d183c9-e3879e-fec0ce */
+
 :root {
     --main-color: rgb(161, 104, 179);
     --main-color-dark: rgb(69, 24, 83);
     --secondary-color: rgba(139, 95, 191, 1);
     --secondary-dark: rgb(99, 67, 134);
     --secondary-color-light: rgb(252, 177, 244);
-    --accent-color:rgba(227, 135, 158, 1);
+    --accent-color: rgba(227, 135, 158, 1);
     --bg-color: rgba(254, 192, 206, 1);
 }
 
@@ -25,7 +27,7 @@ Tutorial Section: 04
 }
 
 body {
-    background-color: var(--bg-color);  
+    background-color: var(--bg-color);
 }
 
 .container {
@@ -66,8 +68,8 @@ body {
     max-height: 500px;
 }
 
-
 /* Bottom alignment from https://stackoverflow.com/questions/2015032/align-divs-to-bottom-or-baseline */
+
 #messages, #users {
     min-height: 75px;
     display: flex;
@@ -75,12 +77,12 @@ body {
     overflow-y: auto;
 }
 
-.message, .user, .message > * {
+.message, .user, .message>* {
     padding-top: 2px;
     font-size: 20px;
 }
 
-.message-current-user, .message-current-user > * {
+.message-current-user, .message-current-user>* {
     font-weight: bold;
     background-color: var(--main-color-dark);
 }
@@ -104,6 +106,7 @@ body {
 }
 
 /* Math in CSS https://css-tricks.com/a-couple-of-use-cases-for-calc/ */
+
 #input {
     width: calc(100% + 15px);
     margin-top: 10px;

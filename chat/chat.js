@@ -38,7 +38,7 @@ let showError = errorMessage => {
 }
 
 let sendUsername = () => {
-    socket.emit(EVENTS.USER, {user: user});
+    socket.emit(EVENTS.USER, { user: user });
 }
 socket.on(EVENTS.CONNECT, sendUsername);
 socket.on(EVENTS.DISCONNECT, sendUsername);
@@ -61,7 +61,7 @@ socket.on(EVENTS.NICK_NAME, data => {
 socket.on(EVENTS.ALL_USERS, data => {
     usersContainer.empty();
     usersContainer.append('<div style="height: 10000px;"></div>');
-    for(let user of data.users) {
+    for (let user of data.users) {
         usersContainer.append(`<div class="user">${user}</div>`);
     }
     scrollToBottom('.users');
@@ -76,7 +76,7 @@ socket.on(EVENTS.ALL_MESSAGES, data => {
         let userSpan = `<span class="username">${info.user}</span>`;
         let messageSpan = `<span class="message-data">: ${info.message}</span>`;
         let messageClass = 'message';
-        
+
         if (info.user == user) {
             userSpan = `<span class="username" style="color: ${nickcolor};">${info.user}</span>`;
             messageClass += ' message-current-user';
@@ -112,14 +112,14 @@ inputArea.keypress(event => {
             if (splitted.length !== 2) {
                 showError('Incorrect number of arguments, expected 1');
             } else {
-                socket.emit(EVENTS.NICK_COLOR, {user: user, color: splitted[1]});
+                socket.emit(EVENTS.NICK_COLOR, { user: user, color: splitted[1] });
                 inputArea.val('');
             }
         } else if (message.startsWith('/')) {
             showError('Invalid command');
         } else {
             if (message.length > 0) {
-                socket.emit(EVENTS.MESSAGE, {user: user, message: message});
+                socket.emit(EVENTS.MESSAGE, { user: user, message: message });
                 inputArea.val('');
             }
         }
