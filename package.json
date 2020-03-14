@@ -1,13 +1,14 @@
 {
-  "name": "a3",
+  "name": "chat",
   "version": "1.0.0",
-  "description": "SENG 513 A3 - Chat",
-  "main": "index.js",
+  "description": "Multi-user chat using Node.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Inderpreet Dhillon",
   "license": "ISC",
+  "homepage": "https://github.com/Inderpreet-D/NodeJS-Chat",
   "dependencies": {
     "express": "^4.17.1",
     "socket.io": "^2.3.0"
