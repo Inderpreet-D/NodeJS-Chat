@@ -118,8 +118,10 @@ inputArea.keypress(event => {
         } else if (message.startsWith('/')) {
             showError('Invalid command');
         } else {
-            socket.emit(EVENTS.MESSAGE, {user: user, message: message});
-            inputArea.val('');
+            if (message.length > 0) {
+                socket.emit(EVENTS.MESSAGE, {user: user, message: message});
+                inputArea.val('');
+            }
         }
     }
 });
