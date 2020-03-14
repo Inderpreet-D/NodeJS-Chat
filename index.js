@@ -85,7 +85,7 @@ io.on(EVENTS.CONNECT, socket => {
             data.user = getRandomUsername();
         }
         if (!(data.user in colors)) {
-            colors[data.user] = 'yellow';
+            colors[data.user] = 'white';
         }
         socket.emit(EVENTS.NICK_COLOR, { color: colors[data.user] });
         users.push(data.user);
@@ -121,7 +121,8 @@ io.on(EVENTS.CONNECT, socket => {
         messages.push({
             time: getTimestamp(),
             user: data.user,
-            message: data.message
+            message: data.message,
+            color: colors[data.user]
         });
         io.emit(EVENTS.ALL_MESSAGES, { messages: messages });
     });
