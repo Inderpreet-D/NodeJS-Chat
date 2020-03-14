@@ -20,7 +20,6 @@ Tutorial Section: 04
 }
 
 * {
-    /* border: 1px solid green; */
     font-family: 'Open Sans', sans-serif;
     font-size: 1.2rem;
 }
@@ -50,16 +49,27 @@ body {
     background-color: var(--secondary-dark);
     color: var(--secondary-color);
     padding-left: 10px;
+    margin-right: -15px;
+    max-height: 500px;
+}
+
+@media screen and (max-width: 768px) {
+    #users {
+        height: 100px;
+    }
 }
 
 #users {
     color: var(--bg-color);
     background-color: var(--accent-color);
+    margin-left: 15px;
+    max-height: 500px;
 }
+
 
 /* Bottom alignment from https://stackoverflow.com/questions/2015032/align-divs-to-bottom-or-baseline */
 #messages, #users {
-    height: 500px;
+    min-height: 75px;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
@@ -71,7 +81,6 @@ body {
 }
 
 .message-current-user, .message-current-user > * {
-    font-style: italic;
     font-weight: bold;
     background-color: var(--main-color-dark);
 }
@@ -88,15 +97,14 @@ body {
 
 .username {
     color: white;
-    padding-right: 10px;
 }
 
 .message-data {
     color: whitesmoke;
 }
 
+/* Math in CSS https://css-tricks.com/a-couple-of-use-cases-for-calc/ */
 #input {
-    /* Math in CSS https://css-tricks.com/a-couple-of-use-cases-for-calc/ */
     width: calc(100% + 15px);
     margin-top: 10px;
     background-color: lightgray;
